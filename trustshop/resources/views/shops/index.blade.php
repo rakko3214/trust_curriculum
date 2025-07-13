@@ -1,19 +1,7 @@
-<?php
-$dsn = 'mysql:dbname=trustshop;host=db_trustshop';
-$user = 'trustshop_user';
-$password = 'secret';
+@extends('layouts.app')
 
-try {
-    // データベースに接続
-    $dbh = new PDO($dsn, $user, $password);
-
-    // SQL実行
-    $sql=$dbh->query('select * from users inner join shops on users.user_id=shops.user_id');
-} catch (PDOException $e) {
-    print('Error:' . $e->getMessage());
-    die();
-}
-foreach ($sql as $users) {
-    //idを人数分繰り返し表示する
-    echo ($users["id"]). '<br>';
-}
+@section('content')
+        @foreach ($shops as $shop)  
+            <a href="{{ route('shops.show', $shop->id) }}">{{ $shop->name }}</a>
+        @endforeach
+@endsection

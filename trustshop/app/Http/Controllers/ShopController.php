@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Shop;
 
 class ShopController extends Controller
 {
@@ -14,8 +15,8 @@ class ShopController extends Controller
     public function index()
     {
         //
-        return view('shops.index');
-
+        $shops = \App\Models\Shop::with('user')->latest()->get();
+        return view('shops.index', compact('shops'));
     }
 
     /**
@@ -47,7 +48,8 @@ class ShopController extends Controller
      */
     public function show($id)
     {
-        //
+        $shop = Shop::with('user')->find($id);
+        return view('shops.show', compact('shop'));
     }
 
     /**
