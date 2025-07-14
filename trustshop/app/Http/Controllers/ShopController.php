@@ -39,17 +39,17 @@ class ShopController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-        'name' => 'required|string|max:255',
-        'description' => 'nullable|string|max:1000',
-    ]);
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000',
+        ]);
 
-    $shop = new Shop();
-    $shop->user_id = auth()->id();
-    $shop->name = $request->name;
-    $shop->description = $request->description;
-    $shop->save();
+        $shop = new Shop();
+        $shop->user_id = auth()->id();
+        $shop->name = $request->name;
+        $shop->description = $request->description;
+        $shop->save();
 
-    return redirect('/')->with('success', 'ショップを作成しました。');
+        return redirect('/');
     }
 
     /**
@@ -96,5 +96,8 @@ class ShopController extends Controller
     public function destroy($id)
     {
         //
+        $shop = Shop::with('user')->find($id);
+        $shop->delete();
+        return redirect('/');
     }
 }

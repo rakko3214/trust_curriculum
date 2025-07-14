@@ -11,5 +11,11 @@
         説明 <br>
         {{ $shop->description }}
     </div>
-
+    @if (Auth::id() == $shop->user_id)
+    <form action="{{ route('shops.destroy', $shop->id) }}" method="POST">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="underline">削除</button>
+    </form>
+    @endif
 @endsection
