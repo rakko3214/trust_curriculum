@@ -21,10 +21,12 @@ Route::get('/dashboard', function () {
 
 use App\Http\Controllers\ShopController;
 
-Route::get('/', [App\Http\Controllers\ShopController::class, 'index']);
+Route::get('/', [App\Http\Controllers\ShopController::class, 'index'])->name('top');
 
 Route::get('shops/{id}', [ShopController::class, 'show'])->name('shops.show');
 
-Route::resource('shops', App\Http\Controllers\ShopController::class)->except(['show'])->middleware(['auth']);
+Route::get('create', [App\Http\Controllers\ShopController::class, 'create'])->name('shops.create');
+
+Route::resource('shops', App\Http\Controllers\ShopController::class)->except(['create', 'show', 'index'])->middleware(['auth']);
 
 require __DIR__.'/auth.php';
