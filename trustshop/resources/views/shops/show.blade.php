@@ -16,7 +16,7 @@
     </div>
 
     @foreach($products as $product)
-      <a href="{{route('product.show', $product->id)}}" class="underline">{{$product->name}}</a>
+      <a href="{{route('products.show', $product->id)}}" class="underline">{{$product->name}}</a>
     @endforeach
 
     @if (Auth::id() == $shop->user_id)
