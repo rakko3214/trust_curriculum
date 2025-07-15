@@ -31,4 +31,6 @@ Route::get('shops/create', [App\Http\Controllers\ShopController::class, 'create'
 
 Route::resource('shops', App\Http\Controllers\ShopController::class)->middleware(['auth']);
 
+Route::resource('products', App\Http\Controllers\ProductController::class)->middleware(['auth']);
+
 require __DIR__.'/auth.php';

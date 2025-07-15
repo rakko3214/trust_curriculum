@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Shop;
-use App\Models\Product;
 
-class ShopController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +14,6 @@ class ShopController extends Controller
     public function index()
     {
         //
-        $shops = \App\Models\Shop::with('user')->latest()->get();
-        return view('shops.index', compact('shops'));
     }
 
     /**
@@ -28,7 +24,6 @@ class ShopController extends Controller
     public function create()
     {
         //
-        return view('shops.create');
     }
 
     /**
@@ -39,18 +34,7 @@ class ShopController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:1000',
-        ]);
-
-        $shop = new Shop();
-        $shop->user_id = auth()->id();
-        $shop->name = $request->name;
-        $shop->description = $request->description;
-        $shop->save();
-
-        return redirect('/');
+        //
     }
 
     /**
@@ -61,9 +45,7 @@ class ShopController extends Controller
      */
     public function show($id)
     {
-        $shop = Shop::with('user')->find($id);
-        $products = Product::where('shop_id', $id)->get();
-        return view('shops.show', compact('shop', 'products'));
+        //
     }
 
     /**
@@ -75,8 +57,6 @@ class ShopController extends Controller
     public function edit($id)
     {
         //
-        $shop = Shop::with('user')->find($id);
-        return view('shops.edit', compact('shop'));
     }
 
     /**
@@ -89,13 +69,6 @@ class ShopController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:1000',
-        ]);
-        $shop = Shop::with('user')->find($id);
-        $shop->update($request->all());
-        return redirect('/');
     }
 
     /**
@@ -107,8 +80,5 @@ class ShopController extends Controller
     public function destroy($id)
     {
         //
-        $shop = Shop::with('user')->find($id);
-        $shop->delete();
-        return redirect('/');
     }
 }
