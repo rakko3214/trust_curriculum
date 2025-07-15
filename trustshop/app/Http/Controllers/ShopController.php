@@ -73,6 +73,8 @@ class ShopController extends Controller
     public function edit($id)
     {
         //
+        $shop = Shop::with('user')->find($id);
+        return view('shops.edit', compact('shop'));
     }
 
     /**
@@ -85,6 +87,13 @@ class ShopController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000',
+        ]);
+        $shop = Shop::with('user')->find($id);
+        $shop->update($request->all());
+        return redirect('/');
     }
 
     /**

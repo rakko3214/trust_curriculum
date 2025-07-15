@@ -17,5 +17,6 @@
         @method('DELETE')
         <button type="submit" class="underline">削除</button>
     </form>
+    <a href="{{ route('shops.edit', $shop->id) }}" class="underline">編集</a>
     @endif
 @endsection
