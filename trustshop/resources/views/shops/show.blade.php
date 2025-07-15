@@ -1,24 +1,9 @@
 @extends('layouts.app')
 @section('content')
+<div class="text-center">
     <div class="text-xl mb-4">
         <h1>{{ $shop->user->name }}のショップ</h1>
     </div>
-    <div class="mb-4">
-        ショップ名 <br>
-        {{ $shop->name }}
-    </div>
-    <div class="mb-4">
-        説明 <br>
-        {{ $shop->description }}
-    </div>
-    <div class="text-xl mt-4">
-        <h1>商品一覧</h1>
-    </div>
-
-    @foreach($products as $product)
-      <a href="{{route('products.show', $product->id)}}" class="underline">{{$product->name}}</a>
-    @endforeach
-
     @if (Auth::id() == $shop->user_id)
     <form action="{{ route('shops.destroy', $shop->id) }}" method="POST">
         @csrf
@@ -27,5 +12,30 @@
     </form>
     <a href="{{ route('shops.edit', $shop->id) }}" class="underline">編集</a>
     @endif
+    <div class="mb-4">
+        ショップ名 <br>
+        {{ $shop->name }}
+    </div>
+    <div class="mb-4">
+        説明 <br>
+        {{ $shop->description }}
+    </div>
 
+    <div class="text-xl mt-4">
+        <h1>商品一覧</h1>
+    </div>
+
+    @foreach($products as $product)
+      <a href="{{route('products.show', $product->id)}}" class="underline">{{$product->name}}</a>
+      <p>商品価格</p>
+      <p>{{$product->price}}円</p>
+      <p>在庫</p>
+      @if($product->stock <= 0)
+        <p>SOLD OUT</p>
+      @else
+        <p>{{$product->stock}}個</p>
+      @endif
+
+    @endforeach
+</div>
 @endsection
