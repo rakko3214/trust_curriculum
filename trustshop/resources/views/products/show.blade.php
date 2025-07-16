@@ -2,6 +2,11 @@
 @section('content')
 <div class="text-center">
     <div class="text-xl mb-4">
+      <form action="{{ route('products.destroy', $product->id) }}" method="POST">
+          @csrf
+          @method('DELETE')
+          <button type="submit" class="underline">削除</button>
+      </form>
       <h1>商品名</h1>
       <h2>{{$product->name}}</h2>
     </div>
