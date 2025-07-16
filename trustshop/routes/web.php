@@ -26,7 +26,7 @@ Route::get('/', [App\Http\Controllers\ShopController::class, 'index'])->name('to
 
 Route::get('shops/{id}/show', [ShopController::class, 'show'])->name('shops.show');
 
-Route::get('shops/{id}/edit', [ShopController::class, 'edit'])->name('shops.edit');
+Route::get('shops/{id}/edit', [ShopController::class, 'edit'])->name('shops.edit')->middleware(['auth']);
 
 Route::get('shops/create', [App\Http\Controllers\ShopController::class, 'create'])->name('shops.create');
 
@@ -36,6 +36,8 @@ Route::get('products/{id}/show', [ProductController::class, 'show'])->name('prod
 
 Route::get('shops/{id}/products/create', [ProductController::class, 'create'])->name('products.create');
 
-Route::resource('products', App\Http\Controllers\ProductController::class)->except(['create'])->middleware(['auth']);
+Route::get('shops/{id}/products/edit', [ProductController::class, 'edit'])->name('products.edit')->middleware(['auth']);
+
+Route::resource('products', App\Http\Controllers\ProductController::class)->except(['create', 'show', 'edit'])->middleware(['auth']);
 
 require __DIR__.'/auth.php';
