@@ -80,6 +80,9 @@ class ProductController extends Controller
     public function edit($id)
     {
         //
+        $product = Product::findOrFail($id);
+        $shop = $product->shop;
+        return view('products.edit', compact('product', 'shop'));
     }
 
     /**
@@ -92,6 +95,22 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000',
+            'price' => 'required|integer',
+            'stock' => 'required|integer',
+        ]);
+        $product = Product::find($id);
+        $product->shop_id = $request->shop_id;
+        $product->user_id = auth()->id();
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->stock =  $request->stock;
+        $product->update($request->all());
+        return redirect()->route('shops.show', $product->shop_id);
+
     }
 
     /**
