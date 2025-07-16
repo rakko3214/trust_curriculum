@@ -12,7 +12,7 @@
 
   <div>
     <label for="description" >説明</label>
-    <textarea name="description" id="description" rows="4" class="w-full rounded">{{ old('description') }}</textarea>
+    <textarea name="description" id="description" required class="rounded">{{ old('description') }}</textarea>
   </div>
 
   <button type="submit" class="underline">

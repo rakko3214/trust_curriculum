@@ -21,11 +21,15 @@
         {{ $shop->description }}
     </div>
 
-    <div class="text-xl mt-4">
+    @if (Auth::id() == $shop->user_id)
+      <a href="{{ route('products.create', $shop->id) }}" class="underline">商品作成</a>
+    @endif
+    <div class="flex text-xl mt-4 mb-4">
         <h1>商品一覧</h1>
     </div>
 
     @foreach($products as $product)
+      <div class="mb-4 flex">
       <a href="{{route('products.show', $product->id)}}" class="underline">{{$product->name}}</a>
       <p>商品価格</p>
       <p>{{$product->price}}円</p>
@@ -35,7 +39,7 @@
       @else
         <p>{{$product->stock}}個</p>
       @endif
-
+      </div>
     @endforeach
 </div>
 @endsection
