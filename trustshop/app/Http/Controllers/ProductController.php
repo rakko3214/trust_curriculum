@@ -23,9 +23,12 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         //
+        $shop = Shop::with('user')->find($id);
+        $products = Product::where('shop_id', $id)->get();
+        return view('products.create', compact('shop', 'products'));
     }
 
     /**
@@ -37,6 +40,22 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000',
+            'price' => 'required|integer',
+            'stock' => 'required|integer',
+        ]);
+        $product = new Product();
+        $product->shop_id = $request->shop_id;
+        $product->user_id = auth()->id();
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->stock =  $request->stock;
+        $product->save();
+
+        return redirect()->route('shops.show', $product->shop_id);
     }
 
     /**
