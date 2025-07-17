@@ -126,4 +126,12 @@ class ProductController extends Controller
         $product->delete();
         return redirect()->route('shops.show', $product->shop_id);
     }
+
+    public function purchase($id)
+    {
+        $product = Product::find($id);
+        $product->stock = $product->stock - 1;
+        $product->save();
+        return redirect()->back();
+    }
 }
