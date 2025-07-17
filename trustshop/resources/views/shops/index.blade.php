@@ -8,6 +8,11 @@
         @endauth
     </div>
     <div class="mb-4">
+        @auth
+          <a href="{{ route('shops.mine') }}" class="underline">マイショップ</a>
+        @endauth
+    </div>
+    <div class="mb-4">
       <hi>ショップ一覧</h1>
     </div>
 <br>
