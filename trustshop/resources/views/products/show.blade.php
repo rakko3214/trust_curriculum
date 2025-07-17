@@ -27,10 +27,18 @@
     <div class="text-xl mb-4">
       <h1>在庫</h1>
     </div>
+
+    <div class="mb-4">
+      <p>{{$product->stock}}</p>
+    </div>
+
     @if($product->stock <= 0)
       <p>SOLD OUT</p>
     @else
-      <p>購入</p>
+      <form action="{{ route('products.purchase', $product->id) }}" method="POST">
+        @csrf
+        <button type="submit" class="underline">購入</button>
+      </form>
     @endif
 </div>
 @endsection

@@ -40,6 +40,8 @@ Route::get('shops/{id}/products/create', [ProductController::class, 'create'])->
 
 Route::get('shops/{id}/products/edit', [ProductController::class, 'edit'])->name('products.edit')->middleware(['auth']);
 
+Route::post('products/{id}/purchase', [ProductController::class, 'purchase'])->name('products.purchase');
+
 Route::resource('products', App\Http\Controllers\ProductController::class)->except(['create', 'show', 'edit'])->middleware(['auth']);
 
 require __DIR__.'/auth.php';
