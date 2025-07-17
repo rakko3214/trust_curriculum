@@ -30,6 +30,8 @@ Route::get('shops/{id}/edit', [ShopController::class, 'edit'])->name('shops.edit
 
 Route::get('shops/create', [App\Http\Controllers\ShopController::class, 'create'])->name('shops.create');
 
+Route::get('shops/mine', [App\Http\Controllers\ShopController::class, 'mine'])->name('shops.mine');
+
 Route::resource('shops', App\Http\Controllers\ShopController::class)->except(['show'])->middleware(['auth']);
 
 Route::get('products/{id}/show', [ProductController::class, 'show'])->name('products.show');

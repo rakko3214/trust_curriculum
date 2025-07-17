@@ -111,4 +111,10 @@ class ShopController extends Controller
         $shop->delete();
         return redirect('/');
     }
+
+    public function mine()
+    {
+        $shops =Shop::where('user_id', auth()->id())->get();
+        return view('shops.mine', compact('shops'));
+    }
 }
