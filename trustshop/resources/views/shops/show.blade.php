@@ -11,6 +11,7 @@
         <button type="submit" class="underline">削除</button>
     </form>
     <a href="{{ route('shops.edit', $shop->id) }}" class="underline">編集</a>
+    <a href="{{ route('products.export', $shop->id) }}" class="underline">CSV出力</a>
     @endif
     <div class="mb-4">
         ショップ名 <br>

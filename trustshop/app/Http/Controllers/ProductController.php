@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Shop;
 use App\Models\Product;
+use Illuminate\Support\Facades\Response;
 
 class ProductController extends Controller
 {
@@ -133,5 +134,37 @@ class ProductController extends Controller
         $product->stock = $product->stock - 1;
         $product->save();
         return redirect()->back();
+    }
+
+    public function csv($id)
+    {
+        $products = Product::where('shop_id', $id)->get();
+        
+        $filename = '商品一覧.csv';
+        $csvHeader = ['商品名', '説明', '価格', '在庫'];
+        $temps = [];
+        array_push($temps, $csvHeader);
+        foreach($products as $product){
+            $temp = [
+                $product->name,
+                $product->description,
+                $product->price,
+                $product->stock,
+            ];
+            array_push($temps, $temp);
+        };
+        $stream = fopen('php://temp', 'r+b');
+        foreach ($temps as $temp) {
+            fputcsv($stream, $temp);
+        }
+        rewind($stream);
+        $csv = str_replace(PHP_EOL, "\r\n", stream_get_contents($stream));
+        $csv = mb_convert_encoding($csv, 'SJIS-win', 'UTF-8');
+        $headers = array(
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename='.$filename,
+        );
+        return Response::make($csv, 200, $headers);
+
     }
 }
